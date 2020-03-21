@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+  jupyterbook:
+    build:
+      context: .
+      dockerfile: Dockerfile_jupyter
+    expose:
+      - "8888"
+    networks:
+      - jupyternet
+    volumes:
+      - jupyterdata:/anaconda
+  nginxservice:
+    build:
+      context: .
+      dockerfile: Dockerfile_nginx
+    ports:
+      - 80:80
+    networks:
+      - jupyternet
+networks:
+  jupyternet:
+
+volumes:
+  jupyterdata:

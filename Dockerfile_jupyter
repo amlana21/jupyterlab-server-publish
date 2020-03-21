@@ -1,0 +1,10 @@
+FROM ubuntu:18.04
+RUN apt-get update && apt-get upgrade -y && apt-get install software-properties-common -y && add-apt-repository ppa:deadsnakes/ppa -y && apt-get update
+RUN apt-get install python3.7 -y && apt-get install wget -y
+RUN mkdir /anaconda && cd /anaconda && apt-get install python3-pip -y
+RUN pip3 install jupyterlab && jupyter notebook --generate-config
+EXPOSE 8888
+WORKDIR /root/.jupyter
+COPY jupyter_notebook_config.py jupyter_notebook_config.py
+WORKDIR /anaconda
+CMD ["jupyter","lab"]
