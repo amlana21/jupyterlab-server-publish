@@ -10,6 +10,9 @@ Normally we are used to running Jupyter notebooks or Jupyter lab on our local ma
 
 In this post I will walk through a process to deploy a Jupyter Lab server to AWS using Docker.This method is in no way suitable for a Production environment. This is supposed to cater your personal need to work on a Jupyterlab environment online. To enable it for multiple user access, there are other settings involved which are not discussed on this post.  
 
+I have made all the necessary files available in the below Github repo:  
+https://github.com/amlana21/jupyterlab-server-publish  
+
 ## What you need  
 Below are the pre-requisites for this process and to successfully run the environment on server:  
   - AWS Account  
@@ -63,5 +66,30 @@ Next we will walk through the steps to launch the instance and deploy the docker
   Once the instance is ready, next step is to launch the services and start up the Juperlab server. Follow the below commands on the instance to launch and start the docker services:  
     - <em>Clone the repo: </em>Clone my github repo to get all the necessary files for the docker service.  
     ``` git clone <repo_url>  ```  
-    - Navigate to the repo folder  
-    ``` cd <folder_name>```
+    - <em>Navigate to the repo folder</em>  
+    ``` cd <folder_name>```  
+    - <em>Launch the services: </em>Run the command to launch the docker services defined in the compose file.  
+    ``` docker-compose up -d ```  
+    This will take some time to launch all the services.Once done it will return to the prompt.  
+    - <em>Check the services: </em>Run the below command to check if service is up successfully. Since we are using a single instance, we will see the containers running and not an actual service.  
+    ``` docker container ls ```  
+    If all the containers listed, show an up status, then the launch was successful.  
+
+  
+  ### Verify the application  
+  Next we will verify if the application was launched successfully. To launch the Jupyter lab on browser, navigate to this URL:  
+  ``` <server_url>:80 ```  
+  This will open the below page. Provide the token from the notebook config file as password on this page.  
+  ![InfraStructure](login_page.png) 
+
+
+  Once logged in, you will be in the Jupyter lab environment from where new notebook can be launched or other normal Jupyterlab features can be used.  
+
+  ![InfraStructure](notebook.png) 
+
+  <em>Note</em>: If afer logging in, page doesnt load, refresh the page and it should open the Jupyter lab application.  
+
+## Conclusion  
+In this post, I walked thorugh a process to deploy a Jupyter lab server using Docker. Hope this helps some of you to spin up their own Jupyter lab instances to learn or for some other use of Jupyter notebooks. This is a very straight forward way to launch a basic Jupyter lab server. For more customized settings and more control over the environment, the jupyter config file can be customized with more settings. Last but not the least, this method is not suitbale for production and it only works for one user. For Production use or for multi user use, there will be changes needed to the notebook config file and some other settings in the docker services. For production use, deploying a docker stack will be preferred than docker compose.  
+For any further questions or any issues, please reach out to me at amlanc@achakladar.com.
+
